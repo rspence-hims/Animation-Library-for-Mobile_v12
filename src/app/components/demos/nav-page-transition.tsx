@@ -3,6 +3,9 @@ import { motion, AnimatePresence } from "motion/react";
 import { useState, useRef } from "react";
 import svgPaths from "../../../imports/svg-c25idma1sm";
 import imgDoctor from "figma:asset/doctor-photo.png";
+import imgBodySilhouette from "figma:asset/body-silhouette.png";
+import imgWalkPhoto from "figma:asset/walk-photo.png";
+import imgYogurtPhoto from "figma:asset/yogurt-photo.png";
 
 /* ─── Design Tokens (from design-system.json) ────────────── */
 
@@ -554,24 +557,64 @@ function Divider() {
 function AskIvyPill() {
   return (
     <div
-      className="flex items-center h-[36px] rounded-[40px] px-[16px] gap-[2px]"
+      className="inline-flex items-center h-[36px] rounded-[40px] px-[16px] gap-[3px] self-start"
       style={{ backgroundColor: colors.white }}
     >
       <span
-        className="text-[14px] leading-[16.8px] tracking-[-0.73px]"
+        className="text-[12px] leading-[22px] tracking-[-0.73px]"
         style={{ color: colors.accent, fontFamily: font }}
       >
         ask
       </span>
-      <span
-        className="text-[14px] tracking-[-0.55px] italic"
-        style={{
-          color: colors.accent,
-          fontFamily: '"Ivar Soft", serif',
-        }}
+      <svg
+        width="13"
+        height="11"
+        viewBox="0 0 15 13"
+        fill="none"
+        className="shrink-0"
       >
-        ivy
+        <path
+          d="M7.44138 12.8005C7.02615 12.8005 6.71115 12.6573 6.51069 12.4998C6.41047 12.4139 6.39615 12.3136 6.45342 12.1991C6.65387 11.8555 6.89728 11.6264 7.29819 11.6264C7.71342 11.6264 7.94251 11.8411 8.40069 11.8411C8.93047 11.8411 9.38865 11.3973 9.94706 10.8389C10.1332 10.6527 10.3193 10.4523 10.5055 10.2375L9.25978 4.78228C9.08797 4.02341 8.98774 3.73705 8.47228 3.63682C8.3291 3.60819 8.27183 3.56523 8.27183 3.47932C8.27183 3.40773 8.34342 3.35046 8.45797 3.3075L9.77524 2.79205C9.9041 2.73478 10.033 2.7491 10.0616 2.9066L11.4075 9.07773C12.3525 7.73182 13.1257 6.18546 13.1257 5.04C13.1257 4.12364 12.4241 3.9375 12.4241 3.43637C12.4241 3.12137 12.6961 2.84932 13.1543 2.73478C13.2546 2.70614 13.3405 2.72046 13.4264 2.77773C13.8559 3.0641 14.0277 3.56523 14.0277 4.08069C14.0277 5.67 12.1377 9.23523 10.1761 11.1968C9.07365 12.2993 8.35774 12.8005 7.44138 12.8005Z"
+          fill={colors.accent}
+        />
+        <path
+          d="M4.564 9.86507C4.49241 9.86507 4.42082 9.82212 4.4065 9.69326L3.60468 4.6103C3.50445 3.9803 3.40423 3.72257 2.90309 3.63666C2.75991 3.60803 2.70264 3.56507 2.70264 3.47916C2.70264 3.39326 2.78855 3.3503 2.88877 3.30735L4.22036 2.79189C4.37786 2.73462 4.47809 2.77757 4.50673 2.93507L5.36582 8.61939C6.26786 7.61712 7.49923 5.98485 7.49923 4.89666C7.49923 4.10916 6.82627 3.90871 6.82627 3.42189C6.82627 3.12121 7.09832 2.86348 7.5565 2.74894C7.65673 2.7203 7.74264 2.73462 7.82855 2.79189C8.24377 3.06394 8.41559 3.52212 8.41559 4.02326C8.41559 5.94189 5.69514 8.84848 4.86468 9.67894C4.7215 9.82212 4.64991 9.86507 4.57832 9.86507H4.564Z"
+          fill={colors.accent}
+        />
+        <path
+          d="M0.828519 9.93682C0.0123825 9.93682 -0.130799 9.20659 0.0982916 8.20432L0.928746 4.63909C1.07193 4.03773 1.01466 3.82296 0.470564 3.66546C0.327383 3.6225 0.284428 3.56523 0.284428 3.49364C0.284428 3.42205 0.341701 3.35045 0.456246 3.32182L2.27466 2.80636C2.43216 2.76341 2.53238 2.84932 2.50375 2.9925L1.30102 8.20432C1.15784 8.84864 1.10056 9.20659 1.41556 9.20659C1.68761 9.20659 2.00261 8.87727 2.43216 8.37614C2.53238 8.26159 2.61829 8.24727 2.68988 8.29023C2.79011 8.3475 2.73284 8.505 2.53238 8.77705C1.84511 9.70773 1.34397 9.93682 0.828519 9.93682ZM1.38693 0.816137C1.38693 0.372273 1.77352 0 2.21738 0C2.66125 0 3.04784 0.372273 3.04784 0.816137C3.04784 1.24568 2.64693 1.61795 2.21738 1.61795C1.77352 1.61795 1.38693 1.24568 1.38693 0.816137Z"
+          fill={colors.accent}
+        />
+      </svg>
+    </div>
+  );
+}
+
+function InsightsAskIvyPill() {
+  return (
+    <div
+      className="inline-flex items-center h-[36px] rounded-[40px] px-[16px] gap-[5px] self-start"
+      style={{ backgroundColor: colors.white }}
+    >
+      <span
+        className="text-[12px] leading-[22px] tracking-[-0.73px]"
+        style={{ color: colors.accent, fontFamily: font }}
+      >
+        ask
       </span>
+      <svg
+        width="13"
+        height="13"
+        viewBox="11.19 9.98 7.88 7.88"
+        fill="none"
+        className="shrink-0"
+        style={{ transform: "rotate(45deg)" }}
+      >
+        <path
+          d="M15.5041 10.2672C15.4541 10.1006 15.3009 9.98657 15.127 9.98657C14.9531 9.98657 14.7998 10.1006 14.7499 10.2672C14.4667 11.2112 14.0995 11.8845 13.5936 12.3904C13.0877 12.8963 12.4145 13.2634 11.4704 13.5466C11.3039 13.5966 11.1898 13.7499 11.1898 13.9237C11.1898 14.0976 11.3039 14.2509 11.4704 14.3009C12.4145 14.5841 13.0877 14.9512 13.5936 15.4571C14.0995 15.963 14.4667 16.6363 14.7499 17.5803C14.7998 17.7469 14.9531 17.8609 15.127 17.8609C15.3009 17.8609 15.4541 17.7469 15.5041 17.5803C15.7873 16.6363 16.1545 15.963 16.6604 15.4571C17.1663 14.9512 17.8395 14.5841 18.7836 14.3009C18.9501 14.2509 19.0642 14.0976 19.0642 13.9237C19.0642 13.7499 18.9501 13.5966 18.7836 13.5466C17.8395 13.2634 17.1663 12.8963 16.6604 12.3904C16.1545 11.8845 15.7873 11.2112 15.5041 10.2672Z"
+          fill={colors.accent}
+        />
+      </svg>
     </div>
   );
 }
@@ -1037,6 +1080,480 @@ function ProgressContent() {
   );
 }
 
+/* ─── Insights Page Sub-components ─────────────────────────── */
+
+function UpArrowIcon() {
+  return (
+    <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+      <path
+        d="M6.5 11L6.5 2M6.5 2L3 5.5M6.5 2L10 5.5"
+        stroke="#CC537A"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function ChevronRightIcon({ color = colors.accent }: { color?: string }) {
+  return (
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+      <path
+        d="M8 6L12 10L8 14"
+        stroke={color}
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function RefreshIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <path
+        d="M1.33 8A6.67 6.67 0 0 1 12.44 3.56M14.67 8A6.67 6.67 0 0 1 3.56 12.44"
+        stroke="rgba(22,43,51,0.5)"
+        strokeWidth="1.2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M12.44 1.33v2.23h-2.22M3.56 14.67v-2.23h2.22"
+        stroke="rgba(22,43,51,0.5)"
+        strokeWidth="1.2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function BiologicalAgeCard() {
+  return (
+    <div
+      className="w-[361px] rounded-[16px] overflow-hidden px-[16px] py-[24px] flex flex-col gap-[24px]"
+      style={{ backgroundColor: colors.secondary }}
+    >
+      <div className="flex items-center justify-between" style={{ height: 188 }}>
+        <div className="flex flex-col gap-[24px] flex-1">
+          <p
+            className="text-[20px] leading-[20.1px] tracking-[-1.05px]"
+            style={{ color: colors.primary, fontFamily: font, fontWeight: 500 }}
+          >
+            Biological age
+          </p>
+          <div className="flex items-end" style={{ height: 150 }}>
+            <span
+              className="text-[40px] leading-[39.1px] tracking-[-2.65px]"
+              style={{ color: colors.primary, fontFamily: font }}
+            >
+              48
+            </span>
+          </div>
+        </div>
+        <div className="relative overflow-hidden" style={{ width: 180, height: 188 }}>
+          <img
+            src={imgBodySilhouette}
+            alt=""
+            className="absolute object-cover pointer-events-none"
+            style={{ left: 72, top: 0, width: 78, height: 188 }}
+          />
+          <img
+            src={imgBodySilhouette}
+            alt=""
+            className="absolute object-cover pointer-events-none mix-blend-multiply"
+            style={{ left: 72, top: 0, width: 78, height: 188 }}
+          />
+        </div>
+      </div>
+      <Divider />
+      <div className="flex flex-col gap-[16px]">
+        <div className="flex items-center gap-[4px]">
+          <UpArrowIcon />
+          <span
+            className="text-[16px] leading-[20.1px] tracking-[-0.73px]"
+            style={{ color: "#CC537A", fontFamily: font }}
+          >
+            4 yrs older than your peers
+          </span>
+        </div>
+        <p
+          className="text-[18px] leading-[27.7px] tracking-[-0.89px]"
+          style={{ color: colors.primaryDark, fontFamily: font, opacity: 0.7 }}
+        >
+          Your biological age runs ~4 years higher, driven by cholesterol and
+          A1C—both responsive to steady habits.
+        </p>
+        <InsightsAskIvyPill />
+      </div>
+    </div>
+  );
+}
+
+function BiomarkerBar() {
+  return (
+    <div className="flex items-center gap-[2px] w-full">
+      <div
+        className="flex-1 h-[7px] rounded-[8px]"
+        style={{ backgroundColor: colors.accentBar }}
+      />
+      <div
+        className="h-[7px] rounded-[8px]"
+        style={{ width: 39, backgroundColor: "rgba(235,194,70,0.79)" }}
+      />
+      <div
+        className="h-[7px] rounded-[8px]"
+        style={{ width: 16, backgroundColor: "#CC537A" }}
+      />
+    </div>
+  );
+}
+
+const biomarkerStats = [
+  { value: "75", label: "total" },
+  { value: "67", label: "optimal" },
+  { value: "6", label: "in range" },
+  { value: "2", label: "out of range" },
+];
+
+function BiomarkerStats() {
+  return (
+    <div className="flex flex-col gap-[8px] w-full">
+      <div className="flex items-center justify-between w-full">
+        {biomarkerStats.map((s) => (
+          <div key={s.label} className="flex flex-col">
+            <span
+              className="text-[18px] leading-[18.2px] tracking-[-0.89px]"
+              style={{ color: colors.primary, fontFamily: font, fontWeight: 500 }}
+            >
+              {s.value}
+            </span>
+            <span
+              className="text-[12px] leading-[16.3px] tracking-[-0.73px]"
+              style={{ color: "rgba(22,43,51,0.5)", fontFamily: font }}
+            >
+              {s.label}
+            </span>
+          </div>
+        ))}
+      </div>
+      <BiomarkerBar />
+    </div>
+  );
+}
+
+function BiomarkersCard() {
+  return (
+    <div
+      className="w-[361px] rounded-[16px] overflow-hidden px-[16px] py-[24px] flex flex-col gap-[24px]"
+      style={{ backgroundColor: colors.secondary }}
+    >
+      <div className="flex items-center gap-[10px]">
+        <p
+          className="text-[20px] leading-[20.1px] tracking-[-1.05px] flex-1"
+          style={{ color: colors.primary, fontFamily: font, fontWeight: 500 }}
+        >
+          Biomarkers
+        </p>
+      </div>
+      <BiomarkerStats />
+      <Divider />
+      <div className="flex flex-col gap-[8px]">
+        <p
+          className="text-[16px] leading-[22px] tracking-[-0.73px]"
+          style={{ color: colors.primaryDark, fontFamily: font }}
+        >
+          This consistency supports your body's response while easing decision
+          fatigue around food.
+        </p>
+        <InsightsAskIvyPill />
+      </div>
+    </div>
+  );
+}
+
+function BiomarkersSummaryCard() {
+  return (
+    <div
+      className="w-[361px] rounded-[16px] overflow-hidden px-[16px] py-[24px] flex flex-col"
+      style={{ backgroundColor: colors.secondary }}
+    >
+      <BiomarkerStats />
+    </div>
+  );
+}
+
+function MoreDiagnosticLink() {
+  return (
+    <div className="flex items-center justify-center py-[16px]">
+      <span
+        className="text-[16px] leading-[16.3px] tracking-[-0.73px]"
+        style={{ color: colors.accent, fontFamily: font, fontWeight: 500 }}
+      >
+        More diagnostic test
+      </span>
+      <ChevronRightIcon color={colors.accent} />
+    </div>
+  );
+}
+
+/* ─── Action Cards ────────────────────────────────────────── */
+
+function WalkActionCard() {
+  return (
+    <div
+      className="w-[361px] h-[400px] rounded-[24px] overflow-hidden relative flex flex-col"
+      style={{ backgroundColor: colors.secondary }}
+    >
+      <img
+        src={imgWalkPhoto}
+        alt=""
+        className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+        style={{ objectPosition: "center top" }}
+      />
+      <div
+        className="absolute bottom-0 left-0 w-full"
+        style={{
+          height: 275,
+          background: "linear-gradient(to bottom, rgba(22,43,51,0), #162B33)",
+        }}
+      />
+      <div className="relative flex-1 flex flex-col justify-between px-[16px] py-[24px] z-[1]">
+        <div>
+          <p
+            className="text-[18px] leading-[22px] tracking-[-0.89px]"
+            style={{ color: colors.white, fontFamily: font, fontWeight: 500 }}
+          >
+            Walk
+          </p>
+          <p
+            className="text-[18px] leading-[22px] tracking-[-0.89px]"
+            style={{ color: "rgba(255,255,255,0.7)", fontFamily: font, fontWeight: 500 }}
+          >
+            30 mins
+          </p>
+        </div>
+        <div className="flex flex-col gap-[8px]">
+          <p
+            className="text-[16px] leading-[18.2px] tracking-[-0.57px]"
+            style={{ color: colors.white, fontFamily: font }}
+          >
+            Heart rate:
+          </p>
+          <div className="flex items-center gap-[4px] h-[16px] w-full">
+            <div className="h-[6px] rounded-[30px]" style={{ width: "42%", backgroundColor: colors.white }} />
+            <div className="h-[6px] rounded-[30px]" style={{ width: "19%", backgroundColor: colors.white, opacity: 0.8 }} />
+            <div className="h-[6px] rounded-[30px]" style={{ width: "19%", backgroundColor: colors.white, opacity: 0.6 }} />
+            <div className="h-[6px] rounded-[30px] flex-1" style={{ backgroundColor: colors.white, opacity: 0.4 }} />
+          </div>
+          <div
+            className="flex items-center justify-between text-[16px] leading-[18.2px] tracking-[-0.57px]"
+            style={{ color: colors.white, fontFamily: font }}
+          >
+            <span style={{ width: 144 }}>Zone 1</span>
+            <span style={{ width: 65 }}>Zone 2</span>
+            <span className="flex-1">Zone 3</span>
+            <span style={{ width: 54 }}>Zone 4</span>
+          </div>
+          <div
+            className="flex items-center justify-between text-[14px] leading-[18.2px] tracking-[-0.57px]"
+            style={{ color: colors.white, fontFamily: font, opacity: 0.7 }}
+          >
+            <span style={{ width: 144 }}>13 mins</span>
+            <span className="flex-1">9 mins</span>
+            <span style={{ width: 67 }}>6 mins</span>
+            <span style={{ width: 54 }}>6 mins</span>
+          </div>
+          <div
+            className="w-full h-[48px] rounded-[67px] flex items-center justify-center"
+            style={{ backgroundColor: "rgba(255,255,255,0.1)" }}
+          >
+            <span
+              className="text-[14px] leading-[18.2px] tracking-[-0.57px]"
+              style={{ color: colors.white, fontFamily: font }}
+            >
+              Let's try it
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function YogurtActionCard() {
+  return (
+    <div
+      className="w-[361px] h-[400px] rounded-[24px] overflow-hidden relative flex flex-col"
+      style={{ backgroundColor: colors.secondary }}
+    >
+      <img
+        src={imgYogurtPhoto}
+        alt=""
+        className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+      />
+      <div
+        className="absolute bottom-0 left-0 w-full"
+        style={{
+          height: 213,
+          background: "linear-gradient(to bottom, rgba(22,43,51,0), rgba(22,43,51,0.8))",
+        }}
+      />
+      <div
+        className="absolute top-0 left-0 w-full"
+        style={{
+          height: 91,
+          background: "linear-gradient(to top, rgba(22,43,51,0), rgba(22,43,51,0.7))",
+        }}
+      />
+      <div className="relative flex-1 flex flex-col justify-between px-[16px] py-[24px] z-[1]">
+        <div>
+          <p
+            className="text-[18px] leading-[22px] tracking-[-0.89px]"
+            style={{ color: colors.white, fontFamily: font, fontWeight: 500 }}
+          >
+            Greek Yogurt Breakfast
+          </p>
+          <p
+            className="text-[18px] leading-[22px] tracking-[-0.89px]"
+            style={{ color: "rgba(255,255,255,0.7)", fontFamily: font, fontWeight: 500 }}
+          >
+            354 Kcal
+          </p>
+        </div>
+        <div className="flex flex-col gap-[8px]">
+          <div className="flex items-center gap-[4px] w-full">
+            {[
+              { val: "26g", label: "fat" },
+              { val: "45g", label: "carbs" },
+              { val: "9g", label: "protein" },
+              { val: "1g", label: "fiber" },
+            ].map((m, i, arr) => (
+              <div key={m.label} className="flex items-center flex-1">
+                <div className="flex flex-col items-center flex-1 py-[8px]">
+                  <span
+                    className="text-[18px] leading-[22px] tracking-[-0.89px]"
+                    style={{ color: colors.white, fontFamily: font, fontWeight: 500 }}
+                  >
+                    {m.val}
+                  </span>
+                  <span
+                    className="text-[14px] leading-[18.2px] tracking-[-0.57px]"
+                    style={{ color: colors.white, fontFamily: font }}
+                  >
+                    {m.label}
+                  </span>
+                </div>
+                {i < arr.length - 1 && (
+                  <div
+                    style={{
+                      width: 1,
+                      height: 39,
+                      backgroundColor: "rgba(255,255,255,0.2)",
+                    }}
+                  />
+                )}
+              </div>
+            ))}
+          </div>
+          <div
+            className="w-full h-[48px] rounded-[67px] flex items-center justify-center"
+            style={{ backgroundColor: "rgba(255,255,255,0.1)" }}
+          >
+            <span
+              className="text-[14px] leading-[18.2px] tracking-[-0.57px]"
+              style={{ color: colors.white, fontFamily: font }}
+            >
+              Mmm sounds good
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function GenerateAlternativesLink() {
+  return (
+    <div className="flex items-center justify-center h-[52px]">
+      <span
+        className="text-[16px] leading-[16.3px] tracking-[-0.73px]"
+        style={{ color: "rgba(22,43,51,0.5)", fontFamily: font }}
+      >
+        Generate alternatives
+      </span>
+      <RefreshIcon />
+    </div>
+  );
+}
+
+/* ─── Insights Page Content ───────────────────────────────── */
+
+function InsightsContent() {
+  return (
+    <div
+      className="absolute left-0 right-0 top-[147px] bottom-0 overflow-y-auto"
+      style={{ scrollbarWidth: "none" }}
+    >
+      <div className="flex flex-col items-center pb-[40px]">
+        <div className="w-[361px] flex flex-col gap-[36px]">
+          <div className="flex flex-col gap-[16px]">
+            <div className="flex flex-col gap-[4px] px-[16px]">
+              <p
+                className="text-[32px] leading-[35.3px] tracking-[-2.01px]"
+                style={{ color: colors.primary, fontFamily: font }}
+              >
+                Insights
+              </p>
+              <p className="text-[16px] leading-[18.2px] tracking-[-0.57px]">
+                <span style={{ color: colors.primary, fontFamily: font }}>
+                  Health risk:{" "}
+                </span>
+                <span style={{ color: colors.accent, fontFamily: font }}>
+                  Low
+                </span>
+              </p>
+            </div>
+            <div className="flex flex-col gap-[4px]">
+              <BiologicalAgeCard />
+              <BiomarkersCard />
+              <BiomarkersSummaryCard />
+              <MoreDiagnosticLink />
+            </div>
+          </div>
+          <div className="flex flex-col gap-[16px]">
+            <div className="flex flex-col gap-[4px] px-[16px]">
+              <p
+                className="text-[32px] leading-[35.3px] tracking-[-2.01px]"
+                style={{ color: colors.primary, fontFamily: font }}
+              >
+                Actions
+              </p>
+              <p
+                className="text-[16px] leading-[18.2px] tracking-[-0.57px]"
+                style={{ color: "rgba(19,38,46,0.4)", fontFamily: font }}
+              >
+                If you'd like to start gently
+              </p>
+            </div>
+            <div className="flex flex-col gap-[4px]">
+              <WalkActionCard />
+              <GenerateAlternativesLink />
+            </div>
+            <div className="flex flex-col gap-[4px]">
+              <YogurtActionCard />
+              <GenerateAlternativesLink />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 /* ─── Main Demo ───────────────────────────────────────────── */
 
 export function NavPageTransitionDemo({
@@ -1076,6 +1593,7 @@ export function NavPageTransitionDemo({
           >
             {selectedTab === 0 && <HomeContent />}
             {selectedTab === 1 && <ProgressContent />}
+            {selectedTab === 2 && <InsightsContent />}
           </motion.div>
         </AnimatePresence>
 
