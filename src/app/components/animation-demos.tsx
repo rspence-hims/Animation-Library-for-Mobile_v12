@@ -16,6 +16,8 @@ import { ModalCenterDemo } from "./demos/modal-center";
 import { ModalToastDemo } from "./demos/modal-toast";
 import { NavMenuExpandDemo } from "./demos/nav-menu-expand";
 import { NavPageTransitionDemo } from "./demos/nav-page-transition";
+import { NavPageTransition2Demo } from "./demos/nav-page-transition-2";
+import { NavPageTransition3Demo } from "./demos/nav-page-transition-3";
 import { NavTabsDemo } from "./demos/nav-tabs";
 import { NavPagePushDemo } from "./demos/nav-page-push";
 import { NavDrawerDemo } from "./demos/nav-drawer";
@@ -44,6 +46,8 @@ export {
   ModalToastDemo,
   NavMenuExpandDemo,
   NavPageTransitionDemo,
+  NavPageTransition2Demo,
+  NavPageTransition3Demo,
   NavTabsDemo,
   NavPagePushDemo,
   NavDrawerDemo,
@@ -74,6 +78,8 @@ export const demoComponents: Record<string, React.FC<{ replayCount?: number }>> 
   "modal-toast": ModalToastDemo,
   "nav-menu-expand": NavMenuExpandDemo,
   "nav-page-transition": NavPageTransitionDemo,
+  "nav-page-transition-2": NavPageTransition2Demo,
+  "nav-page-transition-3": NavPageTransition3Demo,
   "nav-tabs": NavTabsDemo,
   "nav-page-push": NavPagePushDemo,
   "nav-drawer": NavDrawerDemo,

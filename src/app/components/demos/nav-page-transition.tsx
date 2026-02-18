@@ -163,6 +163,9 @@ const springExpand = { type: "spring" as const, stiffness: 400, damping: 28 };
 const springItem = { type: "spring" as const, stiffness: 500, damping: 24 };
 const springPage = { type: "spring" as const, stiffness: 300, damping: 30 };
 
+const easeOutQuad: [number, number, number, number] = [0.25, 0.46, 0.45, 0.94];
+const easeInOutCubic: [number, number, number, number] = [0.65, 0, 0.35, 1];
+
 const menuItems = [
   { id: "heart", left: 2 },
   { id: "chart", left: 50 },
@@ -173,15 +176,22 @@ const iconComponents = [HeartSparkleIcon, ChartIcon, PulseIcon];
 
 /* ─── Page transition variants ────────────────────────────── */
 
+const exitDuration = 0.55;
+
 const pageVariants = {
   enter: (dir: number) => ({
     x: dir > 0 ? 375 : -375,
+    opacity: 0,
   }),
   center: {
     x: 0,
+    opacity: 1,
+    transition: { duration: exitDuration, ease: easeInOutCubic },
   },
   exit: (dir: number) => ({
     x: dir > 0 ? -375 : 375,
+    opacity: 0,
+    transition: { duration: exitDuration, ease: easeOutQuad },
   }),
 };
 
@@ -434,7 +444,11 @@ const responseChips = [
 
 function ResponseChips() {
   return (
-    <div className="absolute left-1/2 -translate-x-1/2 top-[469px] w-[335px] flex flex-col gap-[4.08px]">
+    <motion.div
+      exit={{ y: 300 }}
+      transition={{ duration: exitDuration, ease: easeOutQuad }}
+      className="absolute left-1/2 -translate-x-1/2 top-[469px] w-[335px] flex flex-col gap-[4.08px]"
+    >
       {responseChips.map((text) => (
         <div
           key={text}
@@ -453,13 +467,18 @@ function ResponseChips() {
           </div>
         </div>
       ))}
-    </div>
+    </motion.div>
   );
 }
 
 function PromptBar() {
   return (
-    <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[375px] flex flex-col items-start">
+    <motion.div
+      initial={{ y: 200 }}
+      animate={{ y: 0, transition: { duration: exitDuration, ease: easeInOutCubic } }}
+      exit={{ x: 375, y: 200, transition: { duration: exitDuration, ease: easeOutQuad } }}
+      className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[375px] flex flex-col items-start"
+    >
       <div
         className="h-[50px] shrink-0 w-full overflow-hidden"
         style={{
@@ -504,7 +523,7 @@ function PromptBar() {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
