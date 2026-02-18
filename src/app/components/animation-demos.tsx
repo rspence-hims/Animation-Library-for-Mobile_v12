@@ -14,6 +14,7 @@ import { ListReorderDemo } from "./demos/list-reorder";
 import { SheetBottomDemo } from "./demos/sheet-bottom";
 import { ModalCenterDemo } from "./demos/modal-center";
 import { ModalToastDemo } from "./demos/modal-toast";
+import { NavMenuExpandDemo } from "./demos/nav-menu-expand";
 import { NavTabsDemo } from "./demos/nav-tabs";
 import { NavPagePushDemo } from "./demos/nav-page-push";
 import { NavDrawerDemo } from "./demos/nav-drawer";
@@ -40,6 +41,7 @@ export {
   SheetBottomDemo,
   ModalCenterDemo,
   ModalToastDemo,
+  NavMenuExpandDemo,
   NavTabsDemo,
   NavPagePushDemo,
   NavDrawerDemo,
@@ -68,6 +70,7 @@ export const demoComponents: Record<string, React.FC<{ replayCount?: number }>> 
   "sheet-bottom": SheetBottomDemo,
   "modal-center": ModalCenterDemo,
   "modal-toast": ModalToastDemo,
+  "nav-menu-expand": NavMenuExpandDemo,
   "nav-tabs": NavTabsDemo,
   "nav-page-push": NavPagePushDemo,
   "nav-drawer": NavDrawerDemo,

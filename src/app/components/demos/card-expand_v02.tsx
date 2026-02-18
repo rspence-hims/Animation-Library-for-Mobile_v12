@@ -10,11 +10,11 @@ import BottomArea from "../../../imports/BottomArea";
 function NavBar() {
   return (
     <div className="flex items-center justify-between px-5 pt-4 pb-2">
-      <div className="relative w-[119px] h-[48px] rounded-[56px] border border-[rgba(154,189,177,0.2)] bg-[rgba(235,243,237,0.1)]">
+      <div className="relative w-[148px] h-[48px] rounded-[56px] border border-[rgba(154,189,177,0.2)] bg-[rgba(235,243,237,0.1)]">
         {/* Teal selected indicator */}
-        <div className="absolute left-[2px] top-[2px] w-[57.5px] h-[44px] rounded-[24px] bg-[#2da5a2]" />
+        <div className="absolute left-[2px] top-[2px] w-[48px] h-[44px] rounded-[24px] bg-[#2da5a2]" />
         {/* Left button – person+sparkle (selected) */}
-        <div className="absolute left-[2px] top-[3px] w-[57.5px] h-[42px] rounded-[24px] flex items-center justify-center">
+        <div className="absolute left-[2px] top-[2px] w-[48px] h-[44px] rounded-[24px] flex items-center justify-center">
           <svg width="19.2" height="19.2" viewBox="0 0 19.2 19.2" fill="none">
             <g clipPath="url(#clip0_nav)">
               <path d="M6 5.19961C6 3.21138 7.61177 1.59961 9.6 1.59961C11.5882 1.59961 13.2 3.21138 13.2 5.19961C13.2 7.18783 11.5882 8.79961 9.6 8.79961C7.61177 8.79961 6 7.18783 6 5.19961Z" fill="white"/>
@@ -30,7 +30,7 @@ function NavBar() {
           </svg>
         </div>
         {/* Right button – heartbeat (unselected) */}
-        <div className="absolute left-[59.5px] top-[2px] w-[57.5px] h-[44px] rounded-[72px] flex items-center justify-center">
+        <div className="absolute left-[50px] top-[2px] w-[48px] h-[44px] rounded-[72px] flex items-center justify-center">
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
             <path d="M1.33333 8H3.51141C3.80226 8 4.05955 7.81144 4.14713 7.53409L5.84107 2.16995C5.89011 2.01464 6.10989 2.01464 6.15893 2.16995L9.84107 13.8301C9.89011 13.9854 10.1099 13.9854 10.1589 13.8301L11.8529 8.46591C11.9405 8.18856 12.1977 8 12.4886 8H14.6667" stroke="#162B33" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"/>
           </svg>
@@ -95,10 +95,54 @@ function PrescriptionCard({
   // Labels mount on expand, but exit early when collapse starts (showText goes false after being true)
   const showLabels = expanded && !(hadTextRef.current && !showText);
 
+  // ── Scale via Web Animations API on a plain wrapper div ──
+  const bounceRef = useRef<HTMLDivElement>(null);
+  const activeAnimRef = useRef<Animation | null>(null);
+
+  const playScale = useCallback((keyframes: Keyframe[], duration: number, easing = "ease-out") => {
+    if (!bounceRef.current) return;
+    activeAnimRef.current?.cancel();
+    const anim = bounceRef.current.animate(keyframes, {
+      duration,
+      easing,
+      fill: "forwards",
+    });
+    activeAnimRef.current = anim;
+    anim.onfinish = () => {
+      activeAnimRef.current = null;
+    };
+  }, []);
+
+  // Quick squeeze on press, then immediately expand
   const handleClick = useCallback(() => {
     if (expanded) return;
-    onExpand();
-  }, [expanded, onExpand]);
+    playScale(
+      [{ transform: "scale(1)" }, { transform: "scale(0.93)" }],
+      110,
+      "ease-out"
+    );
+    setTimeout(() => {
+      onExpand();
+    }, 140);
+  }, [expanded, onExpand, playScale]);
+
+  // Reset scale back to 1 after expand starts (clears the fill:forwards squeeze)
+  const prevExpandedRef = useRef(expanded);
+  useEffect(() => {
+    const wasExpanded = prevExpandedRef.current;
+    prevExpandedRef.current = expanded;
+
+    if (expanded && !wasExpanded) {
+      const t = setTimeout(() => {
+        playScale(
+          [{ transform: "scale(0.93)" }, { transform: "scale(1)" }],
+          150,
+          "ease-out"
+        );
+      }, 80);
+      return () => clearTimeout(t);
+    }
+  }, [expanded, playScale]);
 
   return (
     <motion.div
@@ -122,6 +166,8 @@ function PrescriptionCard({
       }}
       style={{ zIndex: 10, transformOrigin: "50% 50%", transformPerspective: 550 }}
     >
+      {/* Scale wrapper — plain div, animated exclusively via WAAPI */}
+      <div ref={bounceRef} className="absolute inset-0" style={{ transform: "scale(1)" }}>
       {/* Inner clip wrapper – uses clipPath instead of overflow+borderRadius to avoid
            sharp-corner flicker during 3D transforms (GPU compositing bug) */}
       <motion.div
@@ -270,6 +316,7 @@ function PrescriptionCard({
         )}
       </AnimatePresence>
       </motion.div>
+      </div>
     </motion.div>
   );
 }

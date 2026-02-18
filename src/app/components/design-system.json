@@ -1,0 +1,141 @@
+{
+  "name": "Hers Health App",
+  "description": "Design tokens extracted from the Hers App Figma file (AI-App / Hims-App-Animation)",
+
+  "colors": {
+    "primary": {
+      "P800": "#162B33",
+      "P900": "#13262E"
+    },
+    "secondary": {
+      "S200": "#EBF3ED"
+    },
+    "accent": {
+      "teal": "#2DA5A2"
+    },
+    "background": {
+      "white": "#FFFFFF",
+      "surface": "rgba(255, 255, 255, 0.95)",
+      "surfaceStrong": "rgba(255, 255, 255, 0.97)",
+      "chipBg": "#EBF3ED",
+      "badgeBg": "rgba(235, 243, 237, 0.1)",
+      "avatarBg": "rgba(235, 243, 237, 0.8)"
+    },
+    "border": {
+      "subtle": "rgba(154, 189, 177, 0.2)",
+      "input": "rgba(19, 38, 46, 0.08)"
+    },
+    "gradient": {
+      "fadeToWhite": "linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0.95))",
+      "fadeFromWhite": "linear-gradient(to top, rgba(255,255,255,0), rgba(255,255,255,0.97))"
+    }
+  },
+
+  "typography": {
+    "fontFamily": {
+      "regular": "'Sofia Pro', sans-serif",
+      "medium": "'Sofia Pro Medium', sans-serif",
+      "italic": "'Ivar Soft', serif"
+    },
+    "steps": {
+      "4": {
+        "fontSize": "18px",
+        "lineHeight": "24.85px",
+        "letterSpacing": "-0.89px"
+      },
+      "5": {
+        "fontSize": "20px",
+        "lineHeight": "20.1px",
+        "letterSpacing": "-1.05px"
+      },
+      "9": {
+        "fontSize": "32px",
+        "lineHeight": "35.3px",
+        "letterSpacing": "-2.01px"
+      }
+    },
+    "body": {
+      "default": {
+        "fontSize": "15px",
+        "lineHeight": "18.2px",
+        "letterSpacing": "-0.57px"
+      },
+      "chip": {
+        "fontSize": "16.32px",
+        "lineHeight": "18.57px",
+        "letterSpacing": "-0.57px"
+      }
+    }
+  },
+
+  "spacing": {
+    "units": {
+      "U004": 4,
+      "U036": 36
+    },
+    "grid": {
+      "columns": 4,
+      "margin": 6,
+      "marginBlocks": 22
+    },
+    "contentWidth": "335px",
+    "frameWidth": "375px"
+  },
+
+  "radii": {
+    "frame": "45px",
+    "pill": "56px",
+    "chip": "16px",
+    "promptTop": "24px",
+    "promptBottom": "45px",
+    "iconButton": "24px",
+    "avatar": "120px"
+  },
+
+  "components": {
+    "topNav": {
+      "height": "112px",
+      "background": "rgba(255, 255, 255, 0.97)",
+      "navY": "63px",
+      "navWidth": "335px",
+      "iconButtonSize": { "width": "52px", "height": "48px" }
+    },
+    "hamburger": {
+      "lineWidths": ["19px", "14px", "16px"],
+      "lineHeight": "2px",
+      "lineGap": "2px",
+      "lineColor": "#162B33",
+      "lineRadius": "100px"
+    },
+    "headline": {
+      "topOffset": "199px",
+      "gap": "8px"
+    },
+    "careTeamBadge": {
+      "topOffset": "315px",
+      "height": "48px",
+      "avatarSize": "36px",
+      "ivyTextColor": "#2DA5A2",
+      "ivyFontSize": "14.32px"
+    },
+    "responseChips": {
+      "topOffset": "469px",
+      "gap": "4.08px",
+      "chipHeight": "52.03px",
+      "chipPadding": "16.32px",
+      "chipRadius": "16px",
+      "chipBackground": "#EBF3ED",
+      "chipTextColor": "#13262E"
+    },
+    "promptBar": {
+      "background": "#EBF3ED",
+      "paddingX": "22px",
+      "paddingTop": "24px",
+      "paddingBottom": "36px",
+      "iconButtonSize": "52px",
+      "iconButtonGap": "4px",
+      "shieldIconSize": "16px",
+      "actionIconSize": "20px"
+    }
+  }
+}
