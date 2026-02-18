@@ -181,6 +181,18 @@ export const animationCategories: AnimationCategory[] = [
         useCase: "Hamburger menus, overflow menus, contextual action lists",
       },
       {
+        id: "nav-page-transition",
+        name: "Page Transition",
+        description:
+          "An expanding menu with tab selection drives a full-page transition. Clicking a tab slides the teal indicator to the selected item while the current page content slides out left and the new page slides in from the right with spring physics. The navigation bar stays fixed while only the page body animates.",
+        easing: "spring",
+        easingCurve: "cubic-bezier(0.25, 1.0, 0.4, 1)",
+        duration: "400ms + spring",
+        category: "navigation",
+        tags: ["spring", "slide", "enter", "exit", "state-change"],
+        useCase: "Tab-driven page switching, dashboard navigation, multi-view apps",
+      },
+      {
         id: "nav-tabs",
         name: "Tab Bar Switch",
         description:

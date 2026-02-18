@@ -500,7 +500,12 @@ export function NavMenuExpandDemo({
 
   return (
     <DemoShell onReplay={replay}>
-      <div className="absolute inset-0 overflow-hidden bg-white">
+      <div
+        className="absolute inset-0 overflow-hidden bg-white"
+        onClick={() => {
+          if (isOpen) setIsOpen(false);
+        }}
+      >
         <TopNavigation isOpen={isOpen} onToggle={handleToggle} />
         <Headline />
         <CareTeamBadge />

@@ -15,6 +15,7 @@ import { SheetBottomDemo } from "./demos/sheet-bottom";
 import { ModalCenterDemo } from "./demos/modal-center";
 import { ModalToastDemo } from "./demos/modal-toast";
 import { NavMenuExpandDemo } from "./demos/nav-menu-expand";
+import { NavPageTransitionDemo } from "./demos/nav-page-transition";
 import { NavTabsDemo } from "./demos/nav-tabs";
 import { NavPagePushDemo } from "./demos/nav-page-push";
 import { NavDrawerDemo } from "./demos/nav-drawer";
@@ -42,6 +43,7 @@ export {
   ModalCenterDemo,
   ModalToastDemo,
   NavMenuExpandDemo,
+  NavPageTransitionDemo,
   NavTabsDemo,
   NavPagePushDemo,
   NavDrawerDemo,
@@ -71,6 +73,7 @@ export const demoComponents: Record<string, React.FC<{ replayCount?: number }>> 
   "modal-center": ModalCenterDemo,
   "modal-toast": ModalToastDemo,
   "nav-menu-expand": NavMenuExpandDemo,
+  "nav-page-transition": NavPageTransitionDemo,
   "nav-tabs": NavTabsDemo,
   "nav-page-push": NavPagePushDemo,
   "nav-drawer": NavDrawerDemo,
