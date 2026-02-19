@@ -113,7 +113,7 @@ function TopNavigation({ selectedTab }: { selectedTab: number }) {
 
 /* ─── Main Demo ───────────────────────────────────────────── */
 
-export function NavPageTransition3Demo({
+export function NavPageTransition4Demo({
   replayCount = 0,
 }: {
   replayCount?: number;

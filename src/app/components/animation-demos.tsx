@@ -3,6 +3,8 @@
 import { CardExpandDemo } from "./demos/card-expand";
 import { CardExpandV2Demo } from "./demos/card-expand_v01";
 import { CardExpand3dDemo } from "./demos/card-expand_v02";
+import { Card3dGlassDemo } from "./demos/card-3d-glass";
+import { Card3dGlass2Demo } from "./demos/card-3d-glass-2";
 import { CardFlipDemo } from "./demos/card-flip";
 import { CardSwipeDemo } from "./demos/card-swipe";
 import { ButtonTapDemo } from "./demos/button-tap";
@@ -18,6 +20,7 @@ import { NavMenuExpandDemo } from "./demos/nav-menu-expand";
 import { NavPageTransitionDemo } from "./demos/nav-page-transition";
 import { NavPageTransition2Demo } from "./demos/nav-page-transition-2";
 import { NavPageTransition3Demo } from "./demos/nav-page-transition-3";
+import { NavPageTransition4Demo } from "./demos/nav-page-transition-4";
 import { NavTabsDemo } from "./demos/nav-tabs";
 import { NavPagePushDemo } from "./demos/nav-page-push";
 import { NavDrawerDemo } from "./demos/nav-drawer";
@@ -33,6 +36,8 @@ import { AskDemo } from "./demos/ask";
 export {
   CardExpandDemo,
   CardExpandV2Demo,
+  Card3dGlassDemo,
+  Card3dGlass2Demo,
   CardFlipDemo,
   CardSwipeDemo,
   ButtonTapDemo,
@@ -48,6 +53,7 @@ export {
   NavPageTransitionDemo,
   NavPageTransition2Demo,
   NavPageTransition3Demo,
+  NavPageTransition4Demo,
   NavTabsDemo,
   NavPagePushDemo,
   NavDrawerDemo,
@@ -65,6 +71,8 @@ export const demoComponents: Record<string, React.FC<{ replayCount?: number }>> 
   "card-expand": CardExpandDemo,
   "card-expand_v01": CardExpandV2Demo,
   "card-expand_v02": CardExpand3dDemo,
+  "card-3d-glass": Card3dGlassDemo,
+  "card-3d-glass-2": Card3dGlass2Demo,
   "card-flip": CardFlipDemo,
   "card-swipe": CardSwipeDemo,
   "button-tap": ButtonTapDemo,
@@ -80,6 +88,7 @@ export const demoComponents: Record<string, React.FC<{ replayCount?: number }>> 
   "nav-page-transition": NavPageTransitionDemo,
   "nav-page-transition-2": NavPageTransition2Demo,
   "nav-page-transition-3": NavPageTransition3Demo,
+  "nav-page-transition-4": NavPageTransition4Demo,
   "nav-tabs": NavTabsDemo,
   "nav-page-push": NavPagePushDemo,
   "nav-drawer": NavDrawerDemo,

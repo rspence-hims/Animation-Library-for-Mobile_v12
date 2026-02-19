@@ -16,16 +16,16 @@ function NavBar() {
         {/* Left button – person+sparkle (selected) */}
         <div className="absolute left-[2px] top-[2px] w-[57.5px] h-[44px] rounded-[24px] flex items-center justify-center">
           <svg width="19.2" height="19.2" viewBox="0 0 19.2 19.2" fill="none">
-            <g clipPath="url(#clip0_nav)">
+            <g clipPath="url(#clip0_nav_glass2)">
               <path d="M6 5.19961C6 3.21138 7.61177 1.59961 9.6 1.59961C11.5882 1.59961 13.2 3.21138 13.2 5.19961C13.2 7.18783 11.5882 8.79961 9.6 8.79961C7.61177 8.79961 6 7.18783 6 5.19961Z" fill="white"/>
               <path d="M9.59962 9.59961C6.5341 9.59961 4.18793 11.4366 3.23528 14.0124C2.96293 14.7488 3.14939 15.4747 3.58232 15.9906C4.00422 16.4934 4.6555 16.7996 5.35709 16.7996H10.4785C9.97678 16.0822 9.59961 15.1929 9.59961 14.1996C9.59961 12.5753 10.6217 10.6478 12.6081 10.2668C11.7203 9.83927 10.7069 9.59961 9.59962 9.59961Z" fill="white"/>
             </g>
-            <g clipPath="url(#clip1_nav)">
+            <g clipPath="url(#clip1_nav_glass2)">
               <path d="M15.5041 10.2672C15.4541 10.1007 15.3008 9.98665 15.127 9.98665C14.9531 9.98665 14.7998 10.1007 14.7498 10.2672C14.4666 11.2113 14.0995 11.8845 13.5936 12.3905C13.0877 12.8964 12.4144 13.2635 11.4704 13.5467C11.3038 13.5967 11.1898 13.75 11.1898 13.9238C11.1898 14.0977 11.3038 14.251 11.4704 14.3009C12.4144 14.5842 13.0877 14.9513 13.5936 15.4572C14.0995 15.9631 14.4666 16.6364 14.7498 17.5804C14.7998 17.747 14.9531 17.861 15.127 17.861C15.3008 17.861 15.4541 17.747 15.5041 17.5804C15.7873 16.6364 16.1544 15.9631 16.6603 15.4572C17.1662 14.9513 17.8395 14.5842 18.7835 14.3009C18.9501 14.251 19.0641 14.0977 19.0641 13.9238C19.0641 13.75 18.9501 13.5967 18.7835 13.5467C17.8395 13.2635 17.1662 12.8964 16.6603 12.3905C16.1544 11.8845 15.7873 11.2113 15.5041 10.2672Z" fill="white"/>
             </g>
             <defs>
-              <clipPath id="clip0_nav"><rect fill="white" height="19.2" width="19.2"/></clipPath>
-              <clipPath id="clip1_nav"><rect fill="white" height="9.44922" transform="translate(10.4023 9.19922)" width="9.44922"/></clipPath>
+              <clipPath id="clip0_nav_glass2"><rect fill="white" height="19.2" width="19.2"/></clipPath>
+              <clipPath id="clip1_nav_glass2"><rect fill="white" height="9.44922" transform="translate(10.4023 9.19922)" width="9.44922"/></clipPath>
             </defs>
           </svg>
         </div>
@@ -144,6 +144,85 @@ function PrescriptionCard({
     }
   }, [expanded, playScale]);
 
+  // ── Glass effect v2 (uniform blur/chroma + edge-only distortion) ──
+  const clipRef = useRef<HTMLDivElement>(null);
+  const glassBlurRef = useRef<SVGFEGaussianBlurElement>(null);
+  const glassRedOffRef = useRef<SVGFEOffsetElement>(null);
+  const glassBlueOffRef = useRef<SVGFEOffsetElement>(null);
+  const glassFuncRRef = useRef<SVGFEFuncRElement>(null);
+  const glassFuncGRef = useRef<SVGFEFuncGElement>(null);
+  const glassFuncBRef = useRef<SVGFEFuncBElement>(null);
+  const glassDispRef = useRef<SVGFEDisplacementMapElement>(null);
+  const glassRafRef = useRef(0);
+  const glassInitRef = useRef(true);
+
+  useEffect(() => {
+    // Skip initial mount
+    if (glassInitRef.current) { glassInitRef.current = false; return; }
+
+    const el = clipRef.current;
+    const blur = glassBlurRef.current;
+    const rOff = glassRedOffRef.current;
+    const bOff = glassBlueOffRef.current;
+    const fR = glassFuncRRef.current;
+    const fG = glassFuncGRef.current;
+    const fB = glassFuncBRef.current;
+    const disp = glassDispRef.current;
+    if (!el || !blur || !rOff || !bOff || !fR || !fG || !fB || !disp) return;
+
+    cancelAnimationFrame(glassRafRef.current);
+
+    // Tunable parameters
+    // Blur, brightness, RGB: UNIFORM across whole image (per AE reference)
+    // Displacement/distortion: EDGES ONLY via edge map
+    const DURATION = 700;       // ms — matches card transition
+    const PEAK = 0.35;          // peak at 35% — matches rotateX peak
+    const MAX_BLUR = 10;        // px (moderate — content stays recognizable)
+    const MAX_BRIGHT = 2.0;     // multiplier
+    const MAX_RGB_OFFSET = 20;  // px vertical channel shift
+    const MAX_DISP = 45;        // px edge distortion (Y-only)
+
+    el.style.filter = "url(#glass-fx-2)";
+    const t0 = performance.now();
+
+    const tick = (now: number) => {
+      const p = Math.min((now - t0) / DURATION, 1);
+
+      // Skewed bell curve: fast ramp to peak, smooth resolve
+      const i = p <= PEAK
+        ? Math.sin((p / PEAK) * Math.PI * 0.5)
+        : Math.cos(((p - PEAK) / (1 - PEAK)) * Math.PI * 0.5);
+
+      blur.setAttribute("stdDeviation", String(MAX_BLUR * i));
+      rOff.setAttribute("dy", String(-MAX_RGB_OFFSET * i));
+      bOff.setAttribute("dy", String(MAX_RGB_OFFSET * i));
+      const bright = String(1 + (MAX_BRIGHT - 1) * i);
+      fR.setAttribute("slope", bright);
+      fG.setAttribute("slope", bright);
+      fB.setAttribute("slope", bright);
+      disp.setAttribute("scale", String(MAX_DISP * i));
+
+      if (p < 1) {
+        glassRafRef.current = requestAnimationFrame(tick);
+      } else {
+        el.style.filter = "";
+        blur.setAttribute("stdDeviation", "0");
+        rOff.setAttribute("dy", "0");
+        bOff.setAttribute("dy", "0");
+        fR.setAttribute("slope", "1");
+        fG.setAttribute("slope", "1");
+        fB.setAttribute("slope", "1");
+        disp.setAttribute("scale", "0");
+      }
+    };
+
+    glassRafRef.current = requestAnimationFrame(tick);
+    return () => {
+      cancelAnimationFrame(glassRafRef.current);
+      if (el) el.style.filter = "";
+    };
+  }, [expanded]);
+
   return (
     <motion.div
       className="absolute cursor-pointer"
@@ -166,6 +245,52 @@ function PrescriptionCard({
       }}
       style={{ zIndex: 10, transformOrigin: "50% 50%", transformPerspective: 550 }}
     >
+      {/* SVG filter v2 — uniform blur/brightness/RGB + edge-only Y distortion */}
+      <svg style={{ position: "absolute", width: 0, height: 0 }} aria-hidden="true">
+        <defs>
+          <filter id="glass-fx-2" x="-25%" y="-25%" width="150%" height="150%">
+            {/* Edge displacement map — derived from Hannah's AE B/W displacement map.
+                R channel = constant 0.5 → NO horizontal displacement (fixes leftward shift).
+                G channel = 0.5 at center (neutral), 1.0 at edges (max Y push). */}
+            <feMorphology in="SourceAlpha" operator="erode" radius="12" result="shrunk" />
+            <feGaussianBlur in="shrunk" stdDeviation="30" result="soft-center" />
+            <feComponentTransfer in="soft-center" result="edge-map">
+              <feFuncR type="linear" slope={0} intercept={0.5} />
+              <feFuncG type="linear" slope={-0.5} intercept={1} />
+            </feComponentTransfer>
+
+            {/* ── Glass pipeline (uniform blur + brightness + RGB across whole image) ── */}
+
+            {/* Blur — applied uniformly */}
+            <feGaussianBlur ref={glassBlurRef} in="SourceGraphic" stdDeviation="0" result="blurred" />
+
+            {/* Brightness */}
+            <feComponentTransfer in="blurred" result="bright">
+              <feFuncR ref={glassFuncRRef} type="linear" slope="1" />
+              <feFuncG ref={glassFuncGRef} type="linear" slope="1" />
+              <feFuncB ref={glassFuncBRef} type="linear" slope="1" />
+            </feComponentTransfer>
+
+            {/* RGB channel separation */}
+            <feColorMatrix type="matrix" in="bright" result="red"
+              values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" />
+            <feOffset ref={glassRedOffRef} in="red" dx="0" dy="0" result="red-shifted" />
+            <feColorMatrix type="matrix" in="bright" result="green"
+              values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0" />
+            <feColorMatrix type="matrix" in="bright" result="blue"
+              values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0" />
+            <feOffset ref={glassBlueOffRef} in="blue" dx="0" dy="0" result="blue-shifted" />
+            <feComposite in="red-shifted" in2="green" operator="arithmetic" k1="0" k2="1" k3="1" k4="0" result="rg" />
+            <feComposite in="blue-shifted" in2="rg" operator="arithmetic" k1="0" k2="1" k3="1" k4="0" result="rgb-merged" />
+
+            {/* Edge distortion — Y-only bend at edges, center undistorted.
+                R channel = 0.5 everywhere → no X displacement.
+                G channel = edge map → vertical warp at card edges. */}
+            <feDisplacementMap ref={glassDispRef} in="rgb-merged" in2="edge-map"
+              scale="0" xChannelSelector="R" yChannelSelector="G" />
+          </filter>
+        </defs>
+      </svg>
       {/* Scale wrapper — plain div, animated exclusively via WAAPI */}
       <div ref={bounceRef} className="absolute inset-0" style={{ transform: "scale(1)" }}>
       {/* Inner clip wrapper – uses clipPath instead of overflow+borderRadius to avoid
@@ -187,23 +312,45 @@ function PrescriptionCard({
         }}
         style={{ willChange: "clip-path" }}
       >
-      {/* Bottle image */}
+      {/* Filter wrapper — glass effect applies ONLY to bottle content.
+          overflow:hidden + animated borderRadius clip content to card shape BEFORE the
+          SVG filter processes it, so SourceAlpha matches card edges for displacement. */}
       <motion.div
-        className="absolute left-1/2 top-1/2"
+        ref={clipRef}
+        className="absolute inset-0 bg-[#13262e]"
         initial={false}
         animate={{
-          width: expanded ? 676 : 376,
-          height: expanded ? 1014 : 564,
-          x: "-51%",
-          y: expanded ? "-48%" : "-44%",
+          borderRadius: expanded
+            ? ["24px", "56px", "44px"]
+            : ["44px", "36px", "24px"],
         }}
-        transition={easeTransition}
+        transition={{
+          borderRadius: {
+            duration: 0.7,
+            ease: [0.22, 1, 0.36, 1],
+            times: [0, 0.3, 1],
+          },
+        }}
+        style={{ overflow: "hidden" }}
       >
-        <img
-          alt=""
-          className="w-full h-full object-cover pointer-events-none"
-          src={imgBottle}
-        />
+        {/* Bottle image */}
+        <motion.div
+          className="absolute left-1/2 top-1/2"
+          initial={false}
+          animate={{
+            width: expanded ? 676 : 376,
+            height: expanded ? 1014 : 564,
+            x: "-51%",
+            y: expanded ? "-48%" : "-44%",
+          }}
+          transition={easeTransition}
+        >
+          <img
+            alt=""
+            className="w-full h-full object-cover pointer-events-none"
+            src={imgBottle}
+          />
+        </motion.div>
       </motion.div>
 
       {/* Bottom gradient overlay */}
@@ -323,7 +470,7 @@ function PrescriptionCard({
 
 /* ─── Main demo ──────────────────────────────────────────── */
 
-export function CardExpand3dDemo({ replayCount = 0 }: { replayCount?: number }) {
+export function Card3dGlass2Demo({ replayCount = 0 }: { replayCount?: number }) {
   const [expanded, setExpanded] = useState(false);
   const [showText, setShowText] = useState(false);
   const [showClose, setShowClose] = useState(false);
