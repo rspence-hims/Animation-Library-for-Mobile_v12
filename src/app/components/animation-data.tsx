@@ -55,7 +55,7 @@ export const animationCategories: AnimationCategory[] = [
     icon: "blank",
     items: [
       {
-        id: "ask",
+        id: "blank-phone",
         name: "Blank Phone",
         description:
           "A conversational AI interface where user queries trigger staggered response animations. The chat bubble enters, followed by streaming AI text, an expanding prescription card, and cascading suggestion pills — each element timed in sequence to create a natural dialogue rhythm.",
@@ -65,6 +65,37 @@ export const animationCategories: AnimationCategory[] = [
         category: "blank",
         tags: ["ease-out", "opacity", "slide", "enter", "stagger"],
         useCase: "AI chat interfaces, health assistant conversations, guided support flows",
+      },
+    ],
+  },
+  {
+    id: "intros",
+    name: "Intros",
+    icon: "intros",
+    items: [
+      {
+        id: "intro-image-random",
+        name: "Image Random",
+        description:
+          "A blank demo canvas for prototyping randomized image intro animations.",
+        easing: "ease-out",
+        easingCurve: "cubic-bezier(0, 0, 0.58, 1)",
+        duration: "350ms",
+        category: "intros",
+        tags: ["ease-out", "opacity", "enter"],
+        useCase: "Image intros, onboarding visuals, randomized media presentations",
+      },
+      {
+        id: "intro-video-random",
+        name: "Video Random",
+        description:
+          "A blank demo canvas for prototyping randomized video intro animations.",
+        easing: "ease-out",
+        easingCurve: "cubic-bezier(0, 0, 0.58, 1)",
+        duration: "350ms",
+        category: "intros",
+        tags: ["ease-out", "opacity", "enter"],
+        useCase: "Video intros, onboarding clips, randomized media presentations",
       },
     ],
   },

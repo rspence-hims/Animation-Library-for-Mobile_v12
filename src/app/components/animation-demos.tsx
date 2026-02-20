@@ -31,7 +31,9 @@ import { InputCheckboxDemo } from "./demos/input-checkbox";
 import { FeedbackSkeletonDemo } from "./demos/feedback-skeleton";
 import { FeedbackProgressDemo } from "./demos/feedback-progress";
 import { FeedbackSpinnerDemo } from "./demos/feedback-spinner";
-import { AskDemo } from "./demos/ask";
+import { BlankPhoneDemo } from "./demos/blank-phone";
+import { IntroImageRandomDemo } from "./demos/intro-image-random";
+import { IntroVideoRandomDemo } from "./demos/intro-video-random";
 import { CareTeamDemo } from "./demos/care-team";
 import { IvyIsThinkingDemo } from "./demos/ivy-is-thinking";
 
@@ -66,7 +68,9 @@ export {
   FeedbackSkeletonDemo,
   FeedbackProgressDemo,
   FeedbackSpinnerDemo,
-  AskDemo,
+  BlankPhoneDemo,
+  IntroImageRandomDemo,
+  IntroVideoRandomDemo,
   CareTeamDemo,
   IvyIsThinkingDemo,
 };
@@ -103,7 +107,9 @@ export const demoComponents: Record<string, React.FC<{ replayCount?: number }>> 
   "feedback-skeleton": FeedbackSkeletonDemo,
   "feedback-progress": FeedbackProgressDemo,
   "feedback-spinner": FeedbackSpinnerDemo,
-  "ask": AskDemo,
+  "blank-phone": BlankPhoneDemo,
+  "intro-image-random": IntroImageRandomDemo,
+  "intro-video-random": IntroVideoRandomDemo,
   "care-team": CareTeamDemo,
   "ivy-is-thinking": IvyIsThinkingDemo,
 };

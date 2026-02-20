@@ -17,6 +17,7 @@ import {
   Archive,
   X,
   Smartphone,
+  Play,
 } from "lucide-react";
 import {
   AnimationCategory,
@@ -28,6 +29,7 @@ import {
 
 const categoryIcons: Record<string, React.ReactNode> = {
   blank: <Smartphone className="w-4 h-4" />,
+  intros: <Play className="w-4 h-4" />,
   cards: <CreditCard className="w-4 h-4" />,
   buttons: <RectangleHorizontal className="w-4 h-4" />,
   lists: <List className="w-4 h-4" />,
