@@ -33,6 +33,8 @@ import { FeedbackProgressDemo } from "./demos/feedback-progress";
 import { FeedbackSpinnerDemo } from "./demos/feedback-spinner";
 import { BlankPhoneDemo } from "./demos/blank-phone";
 import { IntroImageRandomDemo } from "./demos/intro-image-random";
+import { IntroImageRandomV2Demo } from "./demos/intro-image-random-v2";
+import { IntroConvoScreenDemo } from "./demos/intro-convo-screen";
 import { IntroVideoRandomDemo } from "./demos/intro-video-random";
 import { CareTeamDemo } from "./demos/care-team";
 import { IvyIsThinkingDemo } from "./demos/ivy-is-thinking";
@@ -70,12 +72,14 @@ export {
   FeedbackSpinnerDemo,
   BlankPhoneDemo,
   IntroImageRandomDemo,
+  IntroImageRandomV2Demo,
+  IntroConvoScreenDemo,
   IntroVideoRandomDemo,
   CareTeamDemo,
   IvyIsThinkingDemo,
 };
 
-export const demoComponents: Record<string, React.FC<{ replayCount?: number }>> = {
+export const demoComponents: Record<string, React.FC<{ replayCount?: number; onProgress?: (progress: number) => void }>> = {
   "card-expand": CardExpandDemo,
   "card-expand_v01": CardExpandV2Demo,
   "card-expand_v02": CardExpand3dDemo,
@@ -109,6 +113,8 @@ export const demoComponents: Record<string, React.FC<{ replayCount?: number }>> 
   "feedback-spinner": FeedbackSpinnerDemo,
   "blank-phone": BlankPhoneDemo,
   "intro-image-random": IntroImageRandomDemo,
+  "intro-image-random-v2": IntroImageRandomV2Demo,
+  "intro-convo-screen": IntroConvoScreenDemo,
   "intro-video-random": IntroVideoRandomDemo,
   "care-team": CareTeamDemo,
   "ivy-is-thinking": IvyIsThinkingDemo,

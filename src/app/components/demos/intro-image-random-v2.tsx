@@ -30,7 +30,7 @@ const aeEaseIn = makeCubicBezier(0.32, 0.06, 0.73, 0.15);
 
 const DELAY = 2000;
 const DURATION = 2000;
-const MAX_SCALE = 1.05;
+const MAX_SCALE = 1.30;
 
 /* ─── WebGL helpers ──────────────────────────────────────── */
 
@@ -93,8 +93,15 @@ void main() {
 }`;
 
 /*
-  Fragment shader: all effects are modulated per-pixel by the displacement map.
-  Bright regions in the map (edges) get full effect; dark regions (center) stay clean.
+  V2 fragment shader — matched to AE comp settings:
+    Brightness  0% → 50%
+    Blur        0% → 13%
+    Scale     100% → 130%
+    Edge Displacement — strong, radial push
+    RGB Separation — strong
+
+  Uses radial displacement (outward from center) instead of gradient-based,
+  so the full white edge zone gets strong warp, not just the transition band.
 */
 const FRAG_SRC = `#version 300 es
 precision highp float;
@@ -106,10 +113,10 @@ uniform float uProgress; // 0 → 1 (eased)
 in vec2 vUv;
 out vec4 fragColor;
 
-const float MAX_DISP   = 0.06;  // displacement warp strength
-const float MAX_CHROMA = 0.015; // chromatic aberration offset (UV space)
-const float MAX_BRIGHT = 1.5;   // peak brightness multiplier at edges
-const float BLUR_RAD   = 0.006; // max blur radius (UV space)
+const float MAX_DISP   = 0.18;  // strong radial edge displacement
+const float MAX_CHROMA = 0.03;  // strong RGB separation at edges
+const float MAX_BRIGHT = 1.5;   // +50% brightness at edges
+const float BLUR_RAD   = 0.04;  // heavy edge blur (~13% of UV space)
 
 void main() {
   vec2 uv = vec2(vUv.x, 1.0 - vUv.y);
@@ -118,13 +125,9 @@ void main() {
   float edge = texture(uDispMap, uv).r;
   float intensity = edge * uProgress;
 
-  // Displacement direction from map gradient (pushes outward along edges)
-  float s = 0.003;
-  float dx = texture(uDispMap, uv + vec2(s, 0.0)).r
-           - texture(uDispMap, uv - vec2(s, 0.0)).r;
-  float dy = texture(uDispMap, uv + vec2(0.0, s)).r
-           - texture(uDispMap, uv - vec2(0.0, s)).r;
-  vec2 warpedUV = uv + vec2(dx, dy) * MAX_DISP * uProgress;
+  // Radial displacement: push pixels outward from center, scaled by edge intensity
+  vec2 toEdge = uv - vec2(0.5);
+  vec2 warpedUV = uv + toEdge * MAX_DISP * intensity;
 
   // Spatially-varying chromatic aberration & blur
   float chroma = MAX_CHROMA * intensity;
@@ -171,7 +174,7 @@ interface GLState {
 
 /* ─── Main Demo ───────────────────────────────────────────── */
 
-export function IntroImageRandomDemo({
+export function IntroImageRandomV2Demo({
   replayCount = 0,
   onProgress,
 }: {

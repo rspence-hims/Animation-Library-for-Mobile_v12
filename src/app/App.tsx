@@ -5,7 +5,7 @@ import { DescriptionPanel } from "./components/description-panel";
 import { SwiftCodePanel } from "./components/swift-code-panel";
 import { demoComponents } from "./components/animation-demos";
 import { AnimatePresence, motion } from "motion/react";
-import { Eye, EyeOff, Play, MousePointerClick, Code2 } from "lucide-react";
+import { Eye, EyeOff, Play, RotateCcw, MousePointerClick, Code2 } from "lucide-react";
 
 type RightPanelMode = "closed" | "details" | "swift";
 
@@ -28,12 +28,14 @@ export default function App() {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [rightPanelMode, setRightPanelMode] = useState<RightPanelMode>("closed");
   const [replayCount, setReplayCount] = useState(0);
+  const [progress, setProgress] = useState(0);
 
   const DemoComponent = selectedItem ? demoComponents[selectedItem.id] : null;
 
   const handleSelectItem = (item: AnimationItem | null) => {
     setSelectedItem(item);
     setReplayCount(0);
+    setProgress(0);
   };
 
   const togglePanel = useCallback((mode: "details" | "swift") => {
@@ -57,13 +59,22 @@ export default function App() {
 
           {/* Title bar above phone — 30px gap to phone */}
           <div className="w-[375px] mb-[30px] h-8 flex items-center">
-            {/* Play button — left aligned */}
+            {/* Play button */}
             <button
-              onClick={() => setReplayCount((c) => c + 1)}
+              onClick={() => { setProgress(0); setReplayCount((c) => c + 1); }}
               className="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 flex items-center justify-center transition-colors flex-shrink-0"
-              title="Replay animation"
+              title="Play animation"
             >
               <Play className="w-4 h-4 text-white/40" />
+            </button>
+
+            {/* Restart button */}
+            <button
+              onClick={() => { setProgress(0); setReplayCount((c) => c + 1); }}
+              className="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 flex items-center justify-center transition-colors flex-shrink-0 ml-1"
+              title="Restart animation"
+            >
+              <RotateCcw className="w-3.5 h-3.5 text-white/40" />
             </button>
 
             {/* Title text */}
@@ -85,7 +96,7 @@ export default function App() {
                     transition={{ duration: 0.15 }}
                     className="w-full h-full"
                   >
-                    <DemoComponent replayCount={replayCount} />
+                    <DemoComponent replayCount={replayCount} onProgress={setProgress} />
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -136,6 +147,16 @@ export default function App() {
               </button>
             </div>
           </div>
+
+          {/* Progress bar below phone */}
+          {DemoComponent && (
+            <div className="w-[375px] mt-[20px] h-[3px] rounded-full bg-white/5 overflow-hidden">
+              <div
+                className="h-full rounded-full bg-white/25 transition-none"
+                style={{ width: `${Math.min(progress * 100, 100)}%` }}
+              />
+            </div>
+          )}
         </div>
       </div>
 
