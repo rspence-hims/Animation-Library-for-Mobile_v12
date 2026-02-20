@@ -29,50 +29,62 @@ const SWIPE_VELOCITY = 500;
 /* ─── Menu Pill Component ─────────────────────────────────── */
 
 const pillWidths = [82, 122, 114];
-const pillOffsets = [0, -pillWidths[0], -(pillWidths[0] + pillWidths[1])];
-function MenuPill({ selectedTab }: { selectedTab: number }) {
+const PILL_SLIDE = 335;
+
+const pillVariants = {
+  enter: (dir: number) => ({
+    x: dir > 0 ? PILL_SLIDE : -PILL_SLIDE,
+    opacity: 0,
+  }),
+  center: {
+    x: 0,
+    opacity: 1,
+  },
+  exit: (dir: number) => ({
+    x: dir > 0 ? -PILL_SLIDE : PILL_SLIDE,
+    opacity: 0,
+  }),
+};
+
+function MenuPill({ selectedTab, direction }: { selectedTab: number; direction: number }) {
+  const tab = tabs[selectedTab];
   return (
-    <motion.div
-      className="absolute left-0 top-0 overflow-hidden"
-      initial={false}
-      animate={{ width: pillWidths[selectedTab] }}
-      style={{
-        height: 48,
-        borderRadius: 56,
-        backgroundColor: colors.badgeBg,
-        border: `1px solid ${colors.borderSubtle}`,
-      }}
-      transition={springPage}
-    >
-      <motion.div
-        className="flex items-center h-full"
-        initial={false}
-        animate={{ x: pillOffsets[selectedTab] }}
-        transition={springPage}
-      >
-        {tabs.map((tab, i) => (
-          <div
-            key={tab.id}
-            className="flex items-center shrink-0 h-full px-[16px]"
-            style={{ width: pillWidths[i], gap: 8 }}
+    <div className="absolute left-0 top-0 h-[48px]">
+      <AnimatePresence initial={false} custom={direction}>
+        <motion.div
+          key={selectedTab}
+          className="absolute left-0 top-0 flex items-center h-full px-[16px]"
+          custom={direction}
+          variants={pillVariants}
+          initial="enter"
+          animate="center"
+          exit="exit"
+          transition={{ x: springPage, opacity: { duration: 0.15, ease: "easeInOut" } }}
+          style={{
+            width: pillWidths[selectedTab],
+            height: 48,
+            borderRadius: 56,
+            backgroundColor: colors.badgeBg,
+            border: `1px solid ${colors.borderSubtle}`,
+            gap: 8,
+          }}
+        >
+          <tab.Icon color={colors.primary} />
+          <span
+            className="text-[15px] leading-[18.2px] tracking-[-0.57px] font-normal whitespace-nowrap"
+            style={{ color: colors.primary, fontFamily: font, position: "relative", top: 2 }}
           >
-            <tab.Icon color={colors.primary} />
-            <span
-              className="text-[15px] leading-[18.2px] tracking-[-0.57px] font-normal whitespace-nowrap"
-              style={{ color: colors.primary, fontFamily: font, position: "relative", top: 2 }}
-            >
-              {tab.label}
-            </span>
-          </div>
-        ))}
-      </motion.div>
-    </motion.div>
+            {tab.label}
+          </span>
+        </motion.div>
+      </AnimatePresence>
+    </div>
   );
 }
 
 /* ─── Top Navigation ──────────────────────────────────────── */
 
-function TopNavigation({ selectedTab }: { selectedTab: number }) {
+function TopNavigation({ selectedTab, direction }: { selectedTab: number; direction: number }) {
   return (
     <div className="absolute left-0 top-0 w-[375px] flex flex-col items-start z-10">
       <div
@@ -80,7 +92,7 @@ function TopNavigation({ selectedTab }: { selectedTab: number }) {
         style={{ backgroundColor: colors.surfaceStrong }}
       >
         <div className="absolute left-1/2 -translate-x-1/2 top-[63px] h-[48px] w-[335px]">
-          <MenuPill selectedTab={selectedTab} />
+          <MenuPill selectedTab={selectedTab} direction={direction} />
 
           <div className="absolute right-0 top-0 h-[48px] w-[52px] flex items-center justify-center">
             <div
@@ -160,7 +172,7 @@ export function NavPageTransition4Demo({
           </motion.div>
         </AnimatePresence>
 
-        <TopNavigation selectedTab={selectedTab} />
+        <TopNavigation selectedTab={selectedTab} direction={directionRef.current} />
       </motion.div>
     </DemoShell>
   );

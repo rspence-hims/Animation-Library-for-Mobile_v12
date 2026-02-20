@@ -7,9 +7,8 @@ import SwiftUI
 /// navigate between pages with directional slide + fade transitions.
 ///
 /// Animation spec (from Framer Motion):
-///   pillSpring – stiffness:200, damping:25  → response≈0.444, dampingFraction≈0.884
-///   pageEnter  – 0.55s easeInOutCubic [0.65, 0, 0.35, 1]
-///   pageExit   – 0.55s easeOutQuad    [0.25, 0.46, 0.45, 0.94]
+///   pageSpring – stiffness:243, damping:27  → response≈0.403, dampingFraction≈0.866
+///   Used for both pill resizing and page slide transitions.
 ///
 /// Swipe thresholds: 50pt offset or predicted 250pt end translation.
 ///
@@ -22,8 +21,7 @@ struct NavPageTransition3View: View {
 
     // MARK: - Animation Config
 
-    let pillSpring: Animation = .spring(response: 0.444, dampingFraction: 0.884)
-    let pageEnter: Animation = .timingCurve(0.65, 0, 0.35, 1, duration: 0.55)
+    let pageSpring: Animation = .spring(response: 0.403, dampingFraction: 0.866)
 
     // MARK: - Tab Config
 
@@ -50,7 +48,7 @@ struct NavPageTransition3View: View {
     func selectTab(_ tab: Int) {
         guard tab != selectedTab, tab >= 0, tab < numTabs else { return }
         direction = tab > selectedTab ? 1 : -1
-        withAnimation(pageEnter) {
+        withAnimation(pageSpring) {
             selectedTab = tab
         }
     }
@@ -87,8 +85,8 @@ struct NavPageTransition3View: View {
             }
             .id(selectedTab)
             .transition(.asymmetric(
-                insertion: .offset(x: CGFloat(direction) * 375).combined(with: .opacity),
-                removal:   .offset(x: CGFloat(-direction) * 375).combined(with: .opacity)
+                insertion: .offset(x: CGFloat(direction) * 375),
+                removal:   .offset(x: CGFloat(-direction) * 375)
             ))
         }
         .frame(width: 375, height: 812)
@@ -145,7 +143,7 @@ struct NavPageTransition3View: View {
         }
         .frame(width: Self.pillWidths[selectedTab], height: 48)
         .clipShape(RoundedRectangle(cornerRadius: 56))
-        .animation(pillSpring, value: selectedTab)
+        .animation(pageSpring, value: selectedTab)
         .contentShape(Rectangle())
     }
 

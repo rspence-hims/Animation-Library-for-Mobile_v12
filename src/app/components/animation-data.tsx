@@ -50,6 +50,25 @@ export const allTags = [
 
 export const animationCategories: AnimationCategory[] = [
   {
+    id: "blank",
+    name: "Blank",
+    icon: "blank",
+    items: [
+      {
+        id: "ask",
+        name: "Blank Phone",
+        description:
+          "A conversational AI interface where user queries trigger staggered response animations. The chat bubble enters, followed by streaming AI text, an expanding prescription card, and cascading suggestion pills — each element timed in sequence to create a natural dialogue rhythm.",
+        easing: "ease-out",
+        easingCurve: "cubic-bezier(0, 0, 0.58, 1)",
+        duration: "350ms + stagger",
+        category: "blank",
+        tags: ["ease-out", "opacity", "slide", "enter", "stagger"],
+        useCase: "AI chat interfaces, health assistant conversations, guided support flows",
+      },
+    ],
+  },
+  {
     id: "cards",
     name: "Cards",
     icon: "cards",
@@ -148,6 +167,23 @@ export const animationCategories: AnimationCategory[] = [
         category: "cards",
         tags: ["spring", "scale", "opacity", "3d", "enter", "exit"],
         useCase: "App Store today cards, news article previews, product detail expansion",
+        swiftFile: "Card3DGlass2.swift",
+        assetFiles: ["d656ba7ea9c64660e689fc69995f4aee6c3bb579.png"],
+        swiftPackage: {
+          folder: "card-3d-glass-2",
+          exportName: "Card3DGlass2",
+          files: [
+            "Card3DGlass2View.swift",
+            "PhoneFrame.swift",
+            "PrescriptionCard.swift",
+            "SubComponents.swift",
+            "Color+Hex.swift",
+            "Preview.swift",
+          ],
+          assets: {
+            bottle: "d656ba7ea9c64660e689fc69995f4aee6c3bb579.png",
+          },
+        },
       },
       {
         id: "card-flip",
@@ -160,6 +196,7 @@ export const animationCategories: AnimationCategory[] = [
         category: "cards",
         tags: ["3d", "ease-in-out", "state-change"],
         useCase: "Credit card flip, flashcard learning, reveal hidden info",
+        archived: true,
       },
       {
         id: "card-swipe",
@@ -172,18 +209,7 @@ export const animationCategories: AnimationCategory[] = [
         category: "cards",
         tags: ["spring", "gesture", "drag", "swipe", "exit"],
         useCase: "Dating apps, decision UIs, triaging content queues",
-      },
-      {
-        id: "ask",
-        name: "Ask",
-        description:
-          "A conversational AI interface where user queries trigger staggered response animations. The chat bubble enters, followed by streaming AI text, an expanding prescription card, and cascading suggestion pills — each element timed in sequence to create a natural dialogue rhythm.",
-        easing: "ease-out",
-        easingCurve: "cubic-bezier(0, 0, 0.58, 1)",
-        duration: "350ms + stagger",
-        category: "cards",
-        tags: ["ease-out", "opacity", "slide", "enter", "stagger"],
-        useCase: "AI chat interfaces, health assistant conversations, guided support flows",
+        archived: true,
       },
     ],
   },
@@ -298,7 +324,7 @@ export const animationCategories: AnimationCategory[] = [
       },
       {
         id: "nav-page-transition-4",
-        name: "Page Transition 4",
+        name: "Page Transition 4 - Swipe",
         description:
           "An expanding menu with tab selection drives a full-page transition. Clicking a tab slides the teal indicator to the selected item while the current page content slides out left and the new page slides in from the right with spring physics. The navigation bar stays fixed while only the page body animates.",
         easing: "spring",
@@ -307,6 +333,7 @@ export const animationCategories: AnimationCategory[] = [
         category: "navigation",
         tags: ["spring", "slide", "enter", "exit", "state-change"],
         useCase: "Tab-driven page switching, dashboard navigation, multi-view apps",
+        archived: true,
       },
       {
         id: "nav-tabs",
@@ -319,6 +346,7 @@ export const animationCategories: AnimationCategory[] = [
         category: "navigation",
         tags: ["spring", "slide", "state-change"],
         useCase: "Bottom tab bars, top tab navigation, category selectors",
+        archived: true,
       },
       {
         id: "nav-page-push",
@@ -331,6 +359,7 @@ export const animationCategories: AnimationCategory[] = [
         category: "navigation",
         tags: ["ease-out", "slide", "enter", "exit"],
         useCase: "Drill-down navigation, settings hierarchies, multi-step flows",
+        archived: true,
       },
       {
         id: "nav-drawer",
@@ -343,6 +372,7 @@ export const animationCategories: AnimationCategory[] = [
         category: "navigation",
         tags: ["ease-out", "slide", "gesture", "enter", "exit"],
         useCase: "Hamburger menus, app-level navigation, settings access",
+        archived: true,
       },
       {
         id: "nav-segmented",
@@ -355,6 +385,77 @@ export const animationCategories: AnimationCategory[] = [
         category: "navigation",
         tags: ["spring", "slide", "state-change", "tap"],
         useCase: "View mode toggles, filter controls, preference selectors",
+        archived: true,
+      },
+    ],
+  },
+  {
+    id: "feedback",
+    name: "Feedback & Loading",
+    icon: "feedback",
+    items: [
+      {
+        id: "care-team",
+        name: "Care Team",
+        description:
+          "A blank phone canvas for prototyping care team interaction flows.",
+        easing: "ease-out",
+        easingCurve: "cubic-bezier(0, 0, 0.58, 1)",
+        duration: "350ms + stagger",
+        category: "feedback",
+        tags: ["ease-out", "opacity", "slide", "enter", "stagger"],
+        useCase: "Care team dashboards, provider communication, health team coordination",
+      },
+      {
+        id: "ivy-is-thinking",
+        name: "Ivy is thinking",
+        description:
+          "A blank phone canvas for prototyping Ivy thinking state interaction flows.",
+        easing: "ease-out",
+        easingCurve: "cubic-bezier(0, 0, 0.58, 1)",
+        duration: "350ms + stagger",
+        category: "feedback",
+        tags: ["ease-out", "opacity", "slide", "enter", "stagger"],
+        useCase: "AI thinking states, loading indicators, conversational wait states",
+      },
+      {
+        id: "feedback-skeleton",
+        name: "Skeleton Screen",
+        description:
+          "Placeholder shapes match the final content layout. A shimmer gradient sweeps left-to-right on loop, creating a subtle loading pulse. When content arrives, it crossfades over the skeleton. Reduces perceived load time.",
+        easing: "ease-in-out",
+        easingCurve: "cubic-bezier(0.42, 0, 0.58, 1)",
+        duration: "1500ms loop",
+        category: "feedback",
+        tags: ["ease-in-out", "opacity", "loop"],
+        useCase: "Content feeds, profile pages, any data-dependent UI",
+        archived: true,
+      },
+      {
+        id: "feedback-progress",
+        name: "Progress Bar",
+        description:
+          "A determinate progress indicator with smooth width transitions. The filled portion uses ease-out for organic deceleration at each step. A subtle shimmer overlay moves across the fill for visual activity during pauses.",
+        easing: "ease-out",
+        easingCurve: "cubic-bezier(0, 0, 0.58, 1)",
+        duration: "600ms per step",
+        category: "feedback",
+        tags: ["ease-out", "scale", "loop"],
+        useCase: "File uploads, onboarding steps, download progress, form completion",
+        archived: true,
+      },
+      {
+        id: "feedback-spinner",
+        name: "Loading Spinner",
+        description:
+          "Multiple spinner variants: a rotating ring with variable dash length, bouncing dots with staggered timing, and an equalizer-style bar animation. All use perpetual loops with carefully tuned offsets for rhythm.",
+        easing: "linear / spring",
+        easingCurve: "cubic-bezier(0, 0, 1, 1)",
+        duration: "600–1000ms loop",
+        category: "feedback",
+        tags: ["linear", "loop", "scale"],
+        useCase: "API loading, content processing, indeterminate waits",
+        archived: true,
       },
     ],
   },
@@ -527,49 +628,6 @@ export const animationCategories: AnimationCategory[] = [
         category: "inputs",
         tags: ["spring", "scale", "opacity", "tap", "state-change"],
         useCase: "Todo items, form selections, multi-select lists",
-      },
-    ],
-  },
-  {
-    id: "feedback",
-    name: "Feedback & Loading",
-    icon: "feedback",
-    items: [
-      {
-        id: "feedback-skeleton",
-        name: "Skeleton Screen",
-        description:
-          "Placeholder shapes match the final content layout. A shimmer gradient sweeps left-to-right on loop, creating a subtle loading pulse. When content arrives, it crossfades over the skeleton. Reduces perceived load time.",
-        easing: "ease-in-out",
-        easingCurve: "cubic-bezier(0.42, 0, 0.58, 1)",
-        duration: "1500ms loop",
-        category: "feedback",
-        tags: ["ease-in-out", "opacity", "loop"],
-        useCase: "Content feeds, profile pages, any data-dependent UI",
-      },
-      {
-        id: "feedback-progress",
-        name: "Progress Bar",
-        description:
-          "A determinate progress indicator with smooth width transitions. The filled portion uses ease-out for organic deceleration at each step. A subtle shimmer overlay moves across the fill for visual activity during pauses.",
-        easing: "ease-out",
-        easingCurve: "cubic-bezier(0, 0, 0.58, 1)",
-        duration: "600ms per step",
-        category: "feedback",
-        tags: ["ease-out", "scale", "loop"],
-        useCase: "File uploads, onboarding steps, download progress, form completion",
-      },
-      {
-        id: "feedback-spinner",
-        name: "Loading Spinner",
-        description:
-          "Multiple spinner variants: a rotating ring with variable dash length, bouncing dots with staggered timing, and an equalizer-style bar animation. All use perpetual loops with carefully tuned offsets for rhythm.",
-        easing: "linear / spring",
-        easingCurve: "cubic-bezier(0, 0, 1, 1)",
-        duration: "600–1000ms loop",
-        category: "feedback",
-        tags: ["linear", "loop", "scale"],
-        useCase: "API loading, content processing, indeterminate waits",
       },
     ],
   },

@@ -32,6 +32,8 @@ import { FeedbackSkeletonDemo } from "./demos/feedback-skeleton";
 import { FeedbackProgressDemo } from "./demos/feedback-progress";
 import { FeedbackSpinnerDemo } from "./demos/feedback-spinner";
 import { AskDemo } from "./demos/ask";
+import { CareTeamDemo } from "./demos/care-team";
+import { IvyIsThinkingDemo } from "./demos/ivy-is-thinking";
 
 export {
   CardExpandDemo,
@@ -65,6 +67,8 @@ export {
   FeedbackProgressDemo,
   FeedbackSpinnerDemo,
   AskDemo,
+  CareTeamDemo,
+  IvyIsThinkingDemo,
 };
 
 export const demoComponents: Record<string, React.FC<{ replayCount?: number }>> = {
@@ -100,4 +104,6 @@ export const demoComponents: Record<string, React.FC<{ replayCount?: number }>> 
   "feedback-progress": FeedbackProgressDemo,
   "feedback-spinner": FeedbackSpinnerDemo,
   "ask": AskDemo,
+  "care-team": CareTeamDemo,
+  "ivy-is-thinking": IvyIsThinkingDemo,
 };
