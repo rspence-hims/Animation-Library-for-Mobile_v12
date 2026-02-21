@@ -29,7 +29,7 @@ const aeEaseIn = makeCubicBezier(0.32, 0.06, 0.73, 0.15);
 
 /* ─── Timing constants ───────────────────────────────────── */
 
-const DELAY = 28;
+const DELAY = 500;
 const DURATION = 990;
 const MAX_SCALE = 1.30;
 
