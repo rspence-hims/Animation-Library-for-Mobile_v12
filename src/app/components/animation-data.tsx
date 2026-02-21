@@ -75,7 +75,7 @@ export const animationCategories: AnimationCategory[] = [
     items: [
       {
         id: "intro-image-random",
-        name: "Image Random",
+        name: "Randomizer v1",
         description:
           "A blank demo canvas for prototyping randomized image intro animations.",
         easing: "ease-out",
@@ -87,7 +87,7 @@ export const animationCategories: AnimationCategory[] = [
       },
       {
         id: "intro-image-random-v2",
-        name: "Image Random V2",
+        name: "Randomizer v2",
         description:
           "Stronger AE-matched variant with heavy edge displacement, visible blur, chromatic aberration, and 130% scale. Effects are spatially modulated by a displacement map — intense at edges, clean in the center.",
         easing: "ease-in",

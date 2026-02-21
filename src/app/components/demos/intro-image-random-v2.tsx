@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { DemoShell } from "./demo-utils";
+import { AnimatedConvoScreen } from "./intro-convo-screen";
 import introImageSrc from "figma:asset/Intro_No_logo.png";
 import displacementMapSrc from "figma:asset/Displacement_map.png";
 
@@ -114,7 +115,7 @@ in vec2 vUv;
 out vec4 fragColor;
 
 const float MAX_DISP   = 0.18;  // strong radial edge displacement
-const float MAX_CHROMA = 0.03;  // strong RGB separation at edges
+const float MAX_CHROMA = 0.07;  // radial RGB separation (radius × distortion)
 const float MAX_BRIGHT = 1.5;   // +50% brightness at edges
 const float BLUR_RAD   = 0.04;  // heavy edge blur (~13% of UV space)
 
@@ -129,11 +130,17 @@ void main() {
   vec2 toEdge = uv - vec2(0.5);
   vec2 warpedUV = uv + toEdge * MAX_DISP * intensity;
 
-  // Spatially-varying chromatic aberration & blur
-  float chroma = MAX_CHROMA * intensity;
-  float blur   = BLUR_RAD * intensity;
+  // Radial chromatic aberration: center gets base amount, edges get much more
+  vec2 radialDir = normalize(uv - vec2(0.5) + 1e-6);
+  float chromaDist = length(uv - vec2(0.5));
+  float baseChroma = 0.15 * uProgress;
+  float edgeChroma = intensity * chromaDist * 2.0;
+  float chroma = MAX_CHROMA * (baseChroma + edgeChroma);
+  vec2 chromaOff = radialDir * chroma;
 
-  // 7×7 Gaussian-weighted blur with per-sample chroma separation
+  float blur = BLUR_RAD * intensity;
+
+  // 7×7 Gaussian-weighted blur with per-sample radial chroma separation
   vec3 accum  = vec3(0.0);
   float totalW = 0.0;
 
@@ -143,9 +150,9 @@ void main() {
       float w  = exp(-float(x * x + y * y) / 6.0);
 
       vec2 sUV = warpedUV + off;
-      float r = texture(uImage, sUV + vec2(0.0, -chroma)).r;
+      float r = texture(uImage, sUV + chromaOff).r;
       float g = texture(uImage, sUV).g;
-      float b = texture(uImage, sUV + vec2(0.0,  chroma)).b;
+      float b = texture(uImage, sUV - chromaOff).b;
 
       accum  += vec3(r, g, b) * w;
       totalW += w;
@@ -185,6 +192,7 @@ export function IntroImageRandomV2Demo({
   const glRef = useRef<GLState | null>(null);
   const rafRef = useRef(0);
   const [localTrigger, setLocalTrigger] = useState(0);
+  const [showConvo, setShowConvo] = useState(false);
   const triggerCount = replayCount + localTrigger;
 
   const handleClick = useCallback(() => {
@@ -271,6 +279,7 @@ export function IntroImageRandomV2Demo({
     const canvas = canvasRef.current!;
 
     cancelAnimationFrame(rafRef.current);
+    setShowConvo(false);
 
     canvas.style.transform = "scale(1)";
     gl.uniform1f(uProgress, 0);
@@ -300,6 +309,8 @@ export function IntroImageRandomV2Demo({
 
       if (p < 1) {
         rafRef.current = requestAnimationFrame(tick);
+      } else {
+        setShowConvo(true);
       }
     };
 
@@ -320,6 +331,12 @@ export function IntroImageRandomV2Demo({
           className="absolute inset-0 h-full w-full"
           style={{ transformOrigin: "center center" }}
         />
+
+        {showConvo && (
+          <div className="absolute inset-0 bg-white">
+            <AnimatedConvoScreen />
+          </div>
+        )}
       </div>
     </DemoShell>
   );

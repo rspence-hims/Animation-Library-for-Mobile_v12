@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { DemoShell } from "./demo-utils";
+import { AnimatedConvoScreen } from "./intro-convo-screen";
 import introImageSrc from "figma:asset/Intro_No_logo.png";
 import displacementMapSrc from "figma:asset/Displacement_map.png";
 
@@ -182,6 +183,7 @@ export function IntroImageRandomDemo({
   const glRef = useRef<GLState | null>(null);
   const rafRef = useRef(0);
   const [localTrigger, setLocalTrigger] = useState(0);
+  const [showConvo, setShowConvo] = useState(false);
   const triggerCount = replayCount + localTrigger;
 
   const handleClick = useCallback(() => {
@@ -268,6 +270,7 @@ export function IntroImageRandomDemo({
     const canvas = canvasRef.current!;
 
     cancelAnimationFrame(rafRef.current);
+    setShowConvo(false);
 
     canvas.style.transform = "scale(1)";
     gl.uniform1f(uProgress, 0);
@@ -297,6 +300,8 @@ export function IntroImageRandomDemo({
 
       if (p < 1) {
         rafRef.current = requestAnimationFrame(tick);
+      } else {
+        setShowConvo(true);
       }
     };
 
@@ -317,6 +322,12 @@ export function IntroImageRandomDemo({
           className="absolute inset-0 h-full w-full"
           style={{ transformOrigin: "center center" }}
         />
+
+        {showConvo && (
+          <div className="absolute inset-0 bg-white">
+            <AnimatedConvoScreen />
+          </div>
+        )}
       </div>
     </DemoShell>
   );

@@ -306,7 +306,7 @@ function StaticPromptBar() {
 
 /* ─── Animated Convo Screen (Sequenced Entrance) ─────────── */
 
-function AnimatedConvoScreen() {
+export function AnimatedConvoScreen() {
   const navDelay = 0.1;
   const chipBaseDelay = 0.6;
   const chipStagger = 0.1;
