@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { DemoShell } from "./demo-utils";
 import { AnimatedConvoScreen } from "./intro-convo-screen";
-import introImageSrc from "figma:asset/Intro_No_logo.png";
+import { getRandomIntroImage } from "./intro-images";
 import displacementMapSrc from "figma:asset/Displacement_map.png";
 
 /* ─── Cubic-bezier evaluator (Newton-Raphson) ────────────── */
@@ -29,8 +29,8 @@ const aeEaseIn = makeCubicBezier(0.32, 0.06, 0.73, 0.15);
 
 /* ─── Timing constants ───────────────────────────────────── */
 
-const DELAY = 2000;
-const DURATION = 2000;
+const DELAY = 28;
+const DURATION = 990;
 const MAX_SCALE = 1.05;
 
 /* ─── WebGL helpers ──────────────────────────────────────── */
@@ -167,6 +167,7 @@ void main() {
 interface GLState {
   gl: WebGL2RenderingContext;
   uProgress: WebGLUniformLocation;
+  tex0: WebGLTexture;
   ready: boolean;
 }
 
@@ -187,8 +188,29 @@ export function IntroImageRandomDemo({
   const triggerCount = replayCount + localTrigger;
 
   const handleClick = useCallback(() => {
-    setLocalTrigger((c) => c + 1);
-  }, []);
+    if (showConvo) {
+      const ctx = glRef.current;
+      if (ctx?.ready) {
+        const { gl, tex0, uProgress } = ctx;
+        const canvas = canvasRef.current!;
+        const img = new Image();
+        img.crossOrigin = "anonymous";
+        img.onload = () => {
+          gl.activeTexture(gl.TEXTURE0);
+          gl.bindTexture(gl.TEXTURE_2D, tex0);
+          gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
+          gl.uniform1f(uProgress, 0);
+          canvas.style.transform = "scale(1)";
+          gl.viewport(0, 0, canvas.width, canvas.height);
+          gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+          setShowConvo(false);
+        };
+        img.src = getRandomIntroImage();
+      }
+    } else {
+      setLocalTrigger((c) => c + 1);
+    }
+  }, [showConvo]);
 
   /* ── Initialise WebGL2 context, shaders, textures ── */
   useEffect(() => {
@@ -234,7 +256,7 @@ export function IntroImageRandomDemo({
     const uProgress = gl.getUniformLocation(program, "uProgress")!;
     gl.uniform1f(uProgress, 0);
 
-    const state: GLState = { gl, uProgress, ready: false };
+    const state: GLState = { gl, uProgress, tex0: null!, ready: false };
     glRef.current = state;
 
     let loaded = 0;
@@ -247,7 +269,8 @@ export function IntroImageRandomDemo({
       }
     };
 
-    const tex0 = loadTexture(gl, introImageSrc, 0, onTexReady);
+    const tex0 = loadTexture(gl, getRandomIntroImage(), 0, onTexReady);
+    state.tex0 = tex0!;
     const tex1 = loadTexture(gl, displacementMapSrc, 1, onTexReady);
 
     return () => {
